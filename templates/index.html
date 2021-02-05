@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <link rel='stylesheet' href={{url_for('static', filename='style.css')}} />   
+    </head>
+    
+    <body>
+        Joseph's favorite artists are: 
+        <ol>
+            {%for i in range(0, artLen)%}
+                <li>{{artists[i]}}</li>
+            {%endfor%}
+        </ol>
+    </body>
+    
+</html>
