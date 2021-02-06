@@ -28,34 +28,14 @@ access_token = auth_response_data['access_token']
 
 data = {'Authorization': 'Bearer {token}'.format(token=access_token)}
 
-artists = ["Taylor Swift", "Drake","Ariana Grande", "The Weeknd", "Eminem"]
 ids = [
-'06HL4z0CvFAxyc27GXpf02', 
-'3TVXtAsR1Inumwj472S9r4',
-'66CXWjxzNUsdJxJ2JdwvnR',
-'1Xyo4u8uXC1ZmMpatF05PJ',
-'7dGJo4pcD2V6oG8kP0tJRR'
+'4O15NlyKLIASxsJ0PrXPfz',
+'0xOeVMOz2fVg5BJY3N6akT',
+'4Gso3d4CscCijv0lmajZWs',
+'5K4W6rqBFWDnAN6FQUkS6x',
+'4LLpKhyESsyAXpc4laK94U',
+'1Bl6wpkWCQ4KVgnASpvzzA'
 ]
-
-
-i = random.randint(0,5)
-add = requests.get(
-    'https://api.spotify.com/v1/artists/{}/top-tracks'.format(ids[i]), 
-    headers=data, 
-    params = {'market':'ES'} 
-    )
-add = add.json()
-
-#print(add)
-
-#track_num = len(add['tracks'])
-rand = 0 #random.randint(track_num)
-song_name = add['tracks'][rand]['name'] 
-song_artist = add['tracks'][rand]['artists'][0]['name']
-song_image = add['tracks'][rand]['album']['images'][0]['url']
-song_audio = add['tracks'][rand]['preview_url'] 
-
-#    print(add)
 
 
 # FLASK
@@ -65,6 +45,26 @@ app = Flask(__name__)
 @app.route('/')
 def spotify():
     print("Updated printline")
+    
+    song_audio = None
+    while song_audio == None:
+        i = random.randint(0,len(ids))
+        add = requests.get(
+            'https://api.spotify.com/v1/artists/{}/top-tracks'.format(ids[i]), 
+           headers=data, 
+           params = {'market':'ES'} 
+        )
+        add = add.json()
+        
+        
+        #track_num = len(add['tracks'])
+    
+        rand = 0 #random.randint(track_num)
+        song_name = add['tracks'][rand]['name'] 
+        song_artist = add['tracks'][rand]['artists'][0]['name']
+        song_image = add['tracks'][rand]['album']['images'][0]['url']
+        song_audio = add['tracks'][rand]['preview_url'] 
+
     
     return render_template(
         "index.html", 
