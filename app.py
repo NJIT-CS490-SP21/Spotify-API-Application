@@ -29,8 +29,6 @@ data = {'Authorization': 'Bearer {token}'.format(token=access_token)}
 
 recent = requests.get('https://api.spotify.com/v1/browse/new-releases', headers=data)
 recent = recent.json()
-#print(recent)
-
 
 artists = ["Taylor Swift", "Drake","Ariana Grande", "The Weeknd", "Eminem"]
 
@@ -45,7 +43,9 @@ def hello_world():
     return render_template(
         "index.html", 
         artists = artists,
-        artLen = len(artists)
+        artLen = len(artists),
+        api = recent
+    
     )
 
 
