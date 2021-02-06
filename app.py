@@ -2,6 +2,7 @@ import requests
 import os
 from dotenv import load_dotenv, find_dotenv
 from flask import Flask, render_template
+import random
 
 # SPOTIFY API
 load_dotenv(find_dotenv())
@@ -28,19 +29,33 @@ access_token = auth_response_data['access_token']
 data = {'Authorization': 'Bearer {token}'.format(token=access_token)}
 
 artists = ["Taylor Swift", "Drake","Ariana Grande", "The Weeknd", "Eminem"]
-ids = ['06HL4z0CvFAxyc27GXpf02', 
+ids = [
+'06HL4z0CvFAxyc27GXpf02', 
 '3TVXtAsR1Inumwj472S9r4',
 '66CXWjxzNUsdJxJ2JdwvnR',
 '1Xyo4u8uXC1ZmMpatF05PJ',
 '7dGJo4pcD2V6oG8kP0tJRR'
 ]
 
-recent = []
-for i in range(5):
-    add = requests.get('https://api.spotify.com/v1/artists/{}/top-tracks'.format(ids[i]), headers=data)
-    add = add.json()
-    recent.append(add)
 
+i = random.randint(0,5)
+add = requests.get(
+    'https://api.spotify.com/v1/artists/{}/top-tracks'.format(ids[i]), 
+    headers=data, 
+    params = {'market':'ES'} 
+    )
+add = add.json()
+
+#print(add)
+
+#track_num = len(add['tracks'])
+rand = 0 #random.randint(track_num)
+song_name = add['tracks'][rand]['name'] 
+song_artist = add['tracks'][rand]['artists'][0]['name']
+song_image = add['tracks'][rand]['album']['images'][0]['url']
+song_audio = add['tracks'][rand]['preview_url'] 
+
+#    print(add)
 
 
 # FLASK
@@ -48,15 +63,15 @@ for i in range(5):
 app = Flask(__name__)
 
 @app.route('/')
-def hello_world():
+def spotify():
     print("Updated printline")
     
     return render_template(
         "index.html", 
-        artists = artists,
-        artLen = len(artists),
-        api = recent
-    
+        song_name = song_name,
+        song_artist = song_artist,
+        song_image = song_image,
+        song_audio = song_audio
     )
 
 
