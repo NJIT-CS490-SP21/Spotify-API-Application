@@ -27,10 +27,21 @@ access_token = auth_response_data['access_token']
 
 data = {'Authorization': 'Bearer {token}'.format(token=access_token)}
 
-recent = requests.get('https://api.spotify.com/v1/browse/new-releases', headers=data)
-recent = recent.json()
-
 artists = ["Taylor Swift", "Drake","Ariana Grande", "The Weeknd", "Eminem"]
+ids = ['06HL4z0CvFAxyc27GXpf02', 
+'3TVXtAsR1Inumwj472S9r4',
+'66CXWjxzNUsdJxJ2JdwvnR',
+'1Xyo4u8uXC1ZmMpatF05PJ',
+'7dGJo4pcD2V6oG8kP0tJRR'
+]
+
+recent = []
+for i in range(5):
+    add = requests.get('https://api.spotify.com/v1/artists/{}/top-tracks'.format(ids[i]), headers=data)
+    add = add.json()
+    recent.append(add)
+
+
 
 # FLASK
 
