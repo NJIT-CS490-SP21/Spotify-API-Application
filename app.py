@@ -68,10 +68,6 @@ def get_song_info(data):
         )
         add = add.json()
         
-        
-       # track_num = len(add['tracks'])
-    
-        rand = random.randint(0, 9) #track_num-1)
         # sometimes getting errors that 'tracks' is not a good keywork sometimes it happens and sometimes it doesn't
         try:
             track_num = len(add['tracks'])
