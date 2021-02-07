@@ -63,9 +63,9 @@ def spotify():
         add = add.json()
         
         
-        #track_num = len(add['tracks'])
+        track_num = len(add['tracks'])
     
-        rand = 0 #random.randint(track_num)
+        rand = random.randint(0, track_num-1)
         song_name = add['tracks'][rand]['name'] 
         song_artist = add['tracks'][rand]['artists'][0]['name']
         song_image = add['tracks'][rand]['album']['images'][0]['url']
