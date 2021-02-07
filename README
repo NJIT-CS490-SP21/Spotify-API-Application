@@ -1,0 +1,50 @@
+- 10 points: Explains all steps of how to deploy the app and what to install
+
+1.Find an internet-connected computer that will run our web server code
+    This computer is referred to as a host, but confusingly can also be called a server
+    This computer might not be real! (It might be a virtual machine.)
+2.Install Flask and other dependencies on that machine
+    This setup process is sometimes referred to as provisioning
+3.Start up our web app on the host
+    In other words, run  or something like it 
+4.Register a URL for our app, like http://myapp.com
+    This URL is called a domain name
+    
+
+
+- 10 points: acknowledgement of 2+ known problems and how to address them if you had more. If no known problems exist, what additional features might you implement, and how? 
+Note that saying “I’d use Javascript” does not count for credit - we’re looking for detailed explanations of what features, technologies, in what files, endpoints, method names, etc. 
+
+I have no known ploblems currenly in my code, but I have some new features I was thinking of implementing in my code:
+    One was to have all of the artists on the html and when clicked it would show songs of that artist.
+    Another was to have albums displayed and when clicked would show all of the songs in that album.
+    I could also combine these two thoughts and have artists displayed and when clicked, show popular albums by this artists. 
+    Then when clicking an album show songs in that album and then you might be actually able to play the song instead of just the preview.
+    
+    I do not know the specifics in how that works, but I think I would have to make multiple htmls and somehow run the next html when clicking on the other html. 
+    I would have to do more research on this.
+
+- 10 points: detailed description of 3+ technical issues and how issues were solved. These should be more descriptive than “I debugged it” - talk about your process, what you searched, link to useful resources that helped you, etc.
+
+One specific problem I had was that I was recieving random errors when accessing the JSON. 
+Sometimes my JSON would give an error saying 'tracks' is not a valid key.
+I believe that when grabbing the top tracks from a specific artist, the JSON did not actually have the 'tracks' key. 
+I fixed this by doing a try/except around all of the lines of code that require me to go through the JSON. 
+I had a while loop around that code anyways and would just continue if there is an error.
+In the while loop I also had the code to grab the api, so everytime I get an error in my JSON I would just grab a new one and check again.
+This does not explain why I got the error but I was able to solve the problem with minimal lines of code, I believe.
+
+Another specific problem I had was in the begining with the GET request.
+I basically copied and pasted from hw5 but it didn't work.
+I was able to get to the Spotify Developers page from the link you gave us and I was able to figure out that I needed another parameter to account for the market.
+I then tried market='US' given in the link on the Developers page about this parameter, but it did not work.
+I tried multiple different ways but could not figure it out until I got to a page that did that specific request.
+It didn't need market='US', it needed params='ES' as 'US' is not on the market for most songs for some reason.
+
+Another specfic problem I ran into was displaying the preview audio.  Most of the songs I encountered did not have a preview audio.
+The first thing I thought of was that I need to know the what information I am showing in the html.
+I made an array with a random 0 or 1 for every variable I had.  
+I then checked if the number corresponding to the preview audio was 1, meaning that we are displaying it.
+After grabbing the information form the JSON, I checked if the preview audio actually exists and isn't None.  
+If it doesn't exist and I am supposed to show it, I would go through my while loop again and grab information on a different artist and song, and check again.
+Once that is done I know that I can display all the information I am supposed to and would then send it to the html to show.
