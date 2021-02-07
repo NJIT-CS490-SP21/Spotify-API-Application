@@ -34,6 +34,7 @@ def GET_AUTHORIZATION():
 
 
 def get_song_info(data):
+    # more artists for more diversability
     ids = [
     '4O15NlyKLIASxsJ0PrXPfz',
     '0xOeVMOz2fVg5BJY3N6akT',
@@ -49,7 +50,7 @@ def get_song_info(data):
     '6qqNVTkY8uBg9cP3Jd7DAH'
     ]
     
-    # decide which information to send
+    # array to decide which information to show
     rand_info = []
     for i in range(4):
         rand_info.append(random.randint(0,1) )
@@ -58,6 +59,7 @@ def get_song_info(data):
     
     # do while, conditions below
     while True:
+        # choose artist and grab top tracks from artist
         i = random.randint(0,len(ids) - 1)
         add = requests.get(
             'https://api.spotify.com/v1/artists/{}/top-tracks'.format(ids[i]), 
@@ -72,6 +74,9 @@ def get_song_info(data):
         rand = random.randint(0, 9) #track_num-1)
         # sometimes getting errors that 'tracks' is not a good keywork sometimes it happens and sometimes it doesn't
         try:
+            track_num = len(add['tracks'])
+            rand = random.randint(0, track_num-1)
+            
             song_name = add['tracks'][rand]['name'] 
             song_artist = add['tracks'][rand]['artists'][0]['name']
             song_image = add['tracks'][rand]['album']['images'][0]['url']
