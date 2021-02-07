@@ -4,13 +4,27 @@
     </head>
     
     <body>
-        <p>{{song_name}} by {{song_artist}}</p>
-        <p> <img src = {{song_image}}> </p>
+        <p> 
+            {%if rand_info >= 1 %}
+                {{song_name}}  
+            {%endif%}
+            
+            {%if rand_info >=2 %}
+                by {{song_artist}}
+            {%endif%}
+        </p>
+        <p> 
+            {%if rand_info >=3 %}
+                <img src = {{song_image}}> 
+            {%endif%}
+        </p>
         
         <p>
-            <audio controls="">
-                <source src={{song_audio}}>
-            </audio>
+            {%if rand_info >=4 %}
+                <audio controls="">
+                    <source src={{song_audio}}>
+                </audio>
+            {%endif%}
         </p>
     </body>
     
