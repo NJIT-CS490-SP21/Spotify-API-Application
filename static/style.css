@@ -1,0 +1,13 @@
+p {
+    text-align:center
+}
+
+body{
+    background-color: DimGrey;
+    font-family: Arial;
+    font-size: 30px;
+}
+
+p:nth-child(1){
+    color: black;
+}
