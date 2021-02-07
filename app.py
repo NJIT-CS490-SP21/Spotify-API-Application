@@ -34,7 +34,13 @@ ids = [
 '4Gso3d4CscCijv0lmajZWs',
 '5K4W6rqBFWDnAN6FQUkS6x',
 '4LLpKhyESsyAXpc4laK94U',
-'1Bl6wpkWCQ4KVgnASpvzzA'
+'1Bl6wpkWCQ4KVgnASpvzzA',
+'5he5w2lnU9x7JFhnwcekXX',
+'64KEffDW9EtZ1y2vBYgq8T',
+'7dGJo4pcD2V6oG8kP0tJRR',
+'246dkjvS1zLTtiykXe5h60',
+'6eUKZXaKkcviH0Ku9w2n3V',
+'6qqNVTkY8uBg9cP3Jd7DAH'
 ]
 
 
@@ -48,7 +54,7 @@ def spotify():
     
     song_audio = None
     while song_audio == None:
-        i = random.randint(0,len(ids))
+        i = random.randint(0,len(ids) - 1)
         add = requests.get(
             'https://api.spotify.com/v1/artists/{}/top-tracks'.format(ids[i]), 
            headers=data, 
