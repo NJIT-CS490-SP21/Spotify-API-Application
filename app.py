@@ -66,6 +66,7 @@ def spotify():
         track_num = len(add['tracks'])
     
         rand = random.randint(0, track_num-1)
+       
         song_name = add['tracks'][rand]['name'] 
         song_artist = add['tracks'][rand]['artists'][0]['name']
         song_image = add['tracks'][rand]['album']['images'][0]['url']
@@ -77,7 +78,8 @@ def spotify():
         song_name = song_name,
         song_artist = song_artist,
         song_image = song_image,
-        song_audio = song_audio
+        song_audio = song_audio,
+        rand_info = random.randint(1,4)
     )
 
 
