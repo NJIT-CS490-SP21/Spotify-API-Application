@@ -32,7 +32,7 @@ def GET_AUTHORIZATION():
     return data
 
 
-
+# GET SONG INFORMATION
 def get_song_info(data):
     # more artists for more diversability
     ids = [
@@ -50,24 +50,18 @@ def get_song_info(data):
     '6qqNVTkY8uBg9cP3Jd7DAH'
     ]
     
-    # array to decide which information to show
-    rand_info = []
-    for i in range(4):
-        rand_info.append(random.randint(0,1) )
-    song_audio = None
-    
-    
+   
+    # choose artist and grab top tracks from artist
+    i = random.randint(0,len(ids) - 1)
+    add = requests.get(
+        'https://api.spotify.com/v1/artists/{}/top-tracks'.format(ids[i]), 
+       headers=data, 
+       params = {'market':'ES'} 
+    )
+    add = add.json()
+   
     # do while, conditions below
     while True:
-        # choose artist and grab top tracks from artist
-        i = random.randint(0,len(ids) - 1)
-        add = requests.get(
-            'https://api.spotify.com/v1/artists/{}/top-tracks'.format(ids[i]), 
-           headers=data, 
-           params = {'market':'ES'} 
-        )
-        add = add.json()
-        
         # sometimes getting errors that 'tracks' is not a good keywork sometimes it happens and sometimes it doesn't
         try:
             track_num = len(add['tracks'])
@@ -80,13 +74,9 @@ def get_song_info(data):
         except:
             continue
         
-        # do while conditions: if we send audio, keep finding different songs until audio is grabbed
-        if rand_info[3] == 0:
-            break
-        if song_audio != None and rand_info[3] == 1:
-            break
+        break
         
-    return [song_name, song_artist, song_image, song_audio, rand_info]
+    return [song_name, song_artist, song_image, song_audio]
 
 # FLASK
 
@@ -102,8 +92,7 @@ def spotify():
         song_name = info[0],
         song_artist = info[1],
         song_image = info[2],
-        song_audio = info[3],
-        rand_info = info[4]
+        song_audio = info[3]
     )
 
 
