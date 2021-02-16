@@ -78,21 +78,44 @@ def get_song_info(data):
         
     return [song_name, song_artist, song_image, song_audio]
 
-# FLASK
+def get_lyric_url(song_name):
+    search_url = 'https://api.genius.com/search'
+    
+    load_dotenv(find_dotenv())
+    genius_access_token = os.getenv('genius-access-token')
+    # print("\n\n\n\nToken:",genius_access_token, "\n\n\n\n")
+    headers = {
+        'Authorization': 'Bearer {}'.format(genius_access_token)
+    }
+    
+    data={'q': song_name }
+    genius_dict = requests.get(search_url, headers=headers, data=data)
+    genius_dict = genius_dict.json()
+    
+    for hit in genius_dict['response']['hits']:
+        if 'lyrics' in hit['result']['url']:
+            return hit['result']['url']
 
+    # grab first hit if there are not lyrics
+    return genius_dict['response']['hits'][0]['result']['url']
+
+# FLASK
 app = Flask(__name__)
 
 @app.route('/')
 def spotify():
     data = GET_AUTHORIZATION()
     info = get_song_info(data)
+    lyric_url = get_lyric_url(info[0]) # song_name = info[0]
     
+    print("LRYICS HTMLS:", lyric_url)
     return render_template(
         "index.html", 
         song_name = info[0],
         song_artist = info[1],
         song_image = info[2],
-        song_audio = info[3]
+        song_audio = info[3],
+        lyric_url = lyric_url
     )
 
 
